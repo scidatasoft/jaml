@@ -1,0 +1,225 @@
+features:
+  upload-formats:
+    value:
+      - sdf
+      - csv
+      - zip
+  upload-max-files:
+    value: 10
+  upload-max-size:
+    value: 52428800
+  upload-max-records:
+    value: 50000
+  table-headers:
+    category: gui
+    description: Choose files table headers
+  download-multi:
+    category: files
+    description: Download multiple files in ZIP
+  delete-multi:
+    category: gui
+    description: Delete multiple files
+  table-search:
+    category: gui
+    description: Ability to search in table fields
+  metadata-edit:
+    category: gui
+    description: Ability to edit file metadata
+  view-tile:
+    category: gui
+    description: Tile view mode for file
+  download-xlsx:
+    category: export
+    description: Download file as Excel
+
+  field-types:
+    value:
+      - value: single-class-label
+        text: Single-class Label
+      - value: continuous-value
+        text: Continuous Value
+      - value: split-on-value
+        text: Split on Value
+      - value: chem-id
+        text: Record ID
+      - value: chem-name
+        text: Chemical Name
+
+  navigate:
+    category: gui
+    description: Navigate from to
+  download-sdf:
+    category: export
+    description: Download as SDF
+  create-batch:
+    category: datasets
+    description: Create datasets in batch mode
+  create-combine:
+    category: datasets
+    description: Create one dataset combining several files
+
+  descriptors:
+    value:
+      - name: ECFP
+        link: https://pubs.acs.org/doi/abs/10.1021/ci100050t
+        provider: RDKit
+        params:
+          Radius:
+            type: single
+            values:
+              - 2
+              - 3
+              - 4
+          Bits:
+            type: single
+            values:
+              - 512
+              - 1024
+              - 2048
+        description: RDKit Morgan circular fingerprints
+      - name: FCFP
+        link: https://pubs.acs.org/doi/abs/10.1021/ci100050t
+        provider: RDKit
+        params:
+          Radius:
+            type: single
+            values:
+              - 2
+              - 3
+              - 4
+          Bits:
+            type: single
+            values:
+              - 512
+              - 1024
+              - 2048
+        description: RDKit Morgan circular fingerprints with features
+  ml-methods:
+    value:
+      - bnb
+      - br
+      - rf
+      - ada
+      - knn
+      - svc
+      - xgb
+      - DL
+      - lreg
+      - enr
+      - rfr
+      - adar
+      - knnr
+      - svr
+      - xgbr
+  test-set-size:
+      category: models
+      description: External test set size, %
+      value:
+        - 0
+        - 5
+        - 10
+        - 15
+        - 20
+        - 25
+        - 30
+  train-multi:
+    category: models
+    description: Batch train models for multiple datasets
+  model-auto-name:
+    category: models
+    description: Auto-name model by adding descriptors and test set size to its name
+  models-ensemble-score:
+    category: models
+    description: Score within models ensemble
+    value:
+      - max
+      - avg
+      - min
+  models-impute:
+    category: models
+    description: Calculate missing or recalculate models
+  models-metrics-groups:
+    category: models
+    description: Classification and regression and those for external test sets
+    value:
+      - value: cls
+        text: C
+      - value: cls_ext
+        text: C*
+      - value: reg
+        text: R
+      - value: reg_ext
+        text: R*
+  ensemble-averaging-modes:
+    value:
+      - name
+      - individual
+      - all
+
+  ketcher-chemical-lookup:
+    category: predict
+    description: Search chemical by Name, CAS, SMILES, DTXSID, DTXCID, InChI or InChIKey
+  ketcher-chemical-info:
+    category: predict
+    description: Show information about the drawn chemical if available
+  resultset-validations-view:
+    category: predict
+    description: Show validation against experimental data
+
+  jobs-view:
+    category: jobs
+    description: See the jobs
+
+  users-view:
+    category: users
+    description: See the users
+
+methods-map:
+  app:
+    create_file: .app.create_file
+    put_file: .app.put_file
+    download_file_xlsx: .app.download_file_xlsx
+    download_files: .app.download_files
+    preload_file: .app.preload_file
+    delete_files: .app.delete_files
+    set_file_acl: .app.set_file_acl
+
+    put_dataset: .app.put_dataset
+    download_dataset_sdf: .app.download_dataset_sdf
+    download_dataset_xlsx: .app.download_dataset_xlsx
+    set_dataset_acl: .app.set_dataset_acl
+
+    download_protocol: .app.download_protocol
+    download_resultset_sdf: .app.download_resultset_sdf
+    download_resultset_xlsx: .app.download_resultset_xlsx
+    get_resultset_validations: .app.get_resultset_validations
+    predict_resultsets: .app.predict_resultsets
+    put_resultset: .app.put_resultset
+    set_resultset_acl: .app.set_resultset_acl
+
+    get_models: .app.get_models
+    impute_models: .app.impute_models
+    download_model: .app.download_model
+    download_models: .app.download_models
+    train_models: .app.train_models
+    set_model_acl: .app.set_model_acl
+
+    get_job: .app.get_job
+    get_jobs: .app.get_jobs
+    put_job: .app.put_job
+    delete_job: .app.delete_job
+    delete_jobs: .app.delete_jobs
+    download_jobs: .app.download_jobs
+
+    create_user: .app.create_user
+    delete_user: .app.delete_user
+    delete_users: .app.delete_users
+    update_user: .app.update_user
+    get_user: .app.get_user
+    get_users: .app.get_users
+
+  auth:
+    authenticate: .auth.authenticate
+
+  models:
+    create_model: .models.create_model

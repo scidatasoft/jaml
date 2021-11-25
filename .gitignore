@@ -1,0 +1,8 @@
+__pycache__/
+test/
+*_results/
+*.log
+data
+/.idea/dataSources/
+out/
+tmp/

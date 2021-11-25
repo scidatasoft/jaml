@@ -1,0 +1,995 @@
+openapi: 3.0.1
+info:
+  title: Just Another Machine Learner (JAML) API
+  license:
+    name: MIT
+  description: API to manage JAML objects
+  version: "0.1"
+servers:
+  - url: /
+paths:
+  /api/metadata:
+    get:
+      operationId: app.get_metadata
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/features:
+    get:
+      operationId: app.get_features
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/config:
+    put:
+      operationId: app.put_config
+      security:
+        - api_key: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: cfg
+              type: object
+        required: true
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/version:
+    put:
+      operationId: app.put_version
+      security:
+        - api_key: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: version
+              type: object
+        required: true
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/files:
+    get:
+      operationId: app.get_files
+      responses:
+        200:
+          description: Success
+          content: {}
+    post:
+      operationId: app.post_file
+      security:
+        - api_key: []
+      responses:
+        200:
+          description: Success
+          content: {}
+    delete:
+      operationId: app.delete_files
+      security:
+        - api_key: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: ids
+              type: array
+        required: true
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/preload:
+    post:
+      operationId: app.preload_file
+      security:
+        - api_key: [ ]
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/files/{id}:
+    get:
+      operationId: app.get_file
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content: {}
+    put:
+      operationId: app.put_file
+      security:
+        - api_key: [ ]
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: metadata
+              type: object
+        required: true
+      responses:
+        200:
+          description: Success
+          content: {}
+    delete:
+      operationId: app.delete_file
+      security:
+        - api_key: [ ]
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/files/{id}/download:
+    get:
+      operationId: app.download_file
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: format
+        in: query
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/files/{id}/acl:
+    put:
+      operationId: app.set_file_acl
+      security:
+        - api_key: ['admin']
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: acl
+              type: object
+        required: true
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/files/download:
+    post:
+      operationId: app.download_files
+      security:
+        - api_key: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: download_request
+              $ref: '#/components/schemas/IdsList'
+        required: true
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/datasets:
+    get:
+      operationId: app.get_datasets
+      responses:
+        200:
+          description: Success
+          content: {}
+    post:
+      operationId: app.create_dataset
+      security:
+        - api_key: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: dataset_spec
+              $ref: '#/components/schemas/DatasetSpec'
+        required: true
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/datasets/{id}:
+    get:
+      operationId: app.get_dataset
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content: {}
+    put:
+      operationId: app.put_dataset
+      security:
+        - api_key: [ ]
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: metadata
+              type: object
+        required: true
+      responses:
+        200:
+          description: Success
+          content: {}
+    delete:
+      operationId: app.delete_dataset
+      security:
+        - api_key: [ ]
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/datasets/{id}/download:
+    get:
+      operationId: app.download_dataset
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: format
+        in: query
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/datasets/{id}/acl:
+    put:
+      operationId: app.set_dataset_acl
+      security:
+        - api_key: ['admin']
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: acl
+              type: object
+        required: true
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/protocols/{id}:
+    get:
+      operationId: app.get_dataset_protocol
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/protocols/{id}/download:
+    get:
+      operationId: app.download_protocol
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: format
+        in: query
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/resultsets:
+    get:
+      operationId: app.get_resultsets
+      parameters:
+      - name: name
+        in: query
+        schema:
+          pattern: ^[a-zA-Z0-9]*$
+          type: string
+      responses:
+        200:
+          description: Success
+          content: {}
+    post:
+      operationId: app.create_resultset
+      security:
+        - api_key: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: dataset_spec
+              $ref: '#/components/schemas/DatasetSpec'
+        required: true
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/resultsets/{id}:
+    get:
+      operationId: app.get_resultset
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content: {}
+    put:
+      operationId: app.put_resultset
+      security:
+        - api_key: [ ]
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: metadata
+              type: object
+        required: true
+      responses:
+        200:
+          description: Success
+          content: {}
+    delete:
+      operationId: app.delete_resultset
+      security:
+        - api_key: [ ]
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/resultsets/{id}/download:
+    get:
+      operationId: app.download_resultset
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: format
+        in: query
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/resultsets/{id}/validations:
+    get:
+      operationId: app.get_resultset_validations
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/resultsets/{id}/acl:
+    put:
+      operationId: app.set_resultset_acl
+      security:
+        - api_key: ['admin']
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: acl
+              type: object
+        required: true
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/resultsets/predict:
+    post:
+      operationId: app.predict_resultsets
+      security:
+        - api_key: ['predict']
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: predict_spec
+              $ref: '#/components/schemas/PredictSpec'
+        required: true
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/predict:
+    post:
+      operationId: app.predict_structs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: predict_spec
+              $ref: '#/components/schemas/SSPredictSpec'
+        required: true
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/models:
+    get:
+      operationId: app.get_models
+      parameters:
+      - name: aggr
+        in: query
+        schema:
+          type: string
+      - name: name
+        in: query
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content: {}
+    post:
+      operationId: app.train_models
+      security:
+        - api_key: ['train']
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: models_spec
+              $ref: '#/components/schemas/ModelsSpec'
+        required: true
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/models/impute:
+    post:
+      operationId: app.impute_models
+      security:
+        - api_key: ['train']
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: impute_spec
+              $ref: '#/components/schemas/ImputeSpec'
+        required: true
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/models/download:
+    post:
+      operationId: app.download_models
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: download_request
+              $ref: '#/components/schemas/IdsList'
+        required: true
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/models/{id}:
+    get:
+      operationId: app.get_model
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content: {}
+    delete:
+      operationId: app.delete_model
+      security:
+        - api_key: [ ]
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/models/{id}/download:
+    get:
+      operationId: app.download_model
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: format
+        in: query
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/models/{id}/image:
+    get:
+      operationId: app.get_model_image
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: set_type
+        in: query
+        schema:
+          type: string
+      - name: kind
+        in: query
+        schema:
+          type: string
+      - name: size
+        in: query
+        schema:
+          type: integer
+      - name: format
+        in: query
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/models/{id}/acl:
+    put:
+      operationId: app.set_model_acl
+      security:
+        - api_key: ['admin']
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: acl
+              type: object
+        required: true
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/jobs:
+    get:
+      operationId: app.get_jobs
+      security:
+        - api_key: [ ]
+      parameters:
+      - name: status
+        in: query
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content: {}
+    delete:
+      operationId: app.delete_jobs
+      security:
+        - api_key: [ ]
+      parameters:
+      - name: what
+        in: query
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/jobs/{id}:
+    get:
+      operationId: app.get_job
+      security:
+        - api_key: [ ]
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content: {}
+    put:
+      operationId: app.put_job
+      security:
+        - api_key: [ ]
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: job_spec
+              type: object
+        required: true
+      responses:
+        200:
+          description: Success
+          content: {}
+    delete:
+      operationId: app.delete_job
+      security:
+        - api_key: [ ]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+          content: { }
+  /api/jobs/download:
+    post:
+      operationId: app.download_jobs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: download_request
+              $ref: '#/components/schemas/IdsList'
+        required: true
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/render/{id}:
+    get:
+      operationId: app.render_image
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: format
+        in: query
+        schema:
+          type: string
+      - name: size
+        in: query
+        schema:
+          type: integer
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/images/{id}:
+    get:
+      operationId: app.get_image
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/login:
+    post:
+      operationId: app.login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: login_spec
+              type: object
+        required: true
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/logout:
+    delete:
+      operationId: app.logout
+      security:
+        - api_key: [ ]
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/users:
+    get:
+      operationId: app.get_users
+      security:
+        - api_key: ['admin']
+      responses:
+        200:
+          description: Success
+          content: {}
+    post:
+      operationId: app.create_user
+      security:
+        - api_key: [ 'admin' ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: user_spec
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        200:
+          description: Success
+          content: {}
+    delete:
+      operationId: app.delete_users
+      security:
+        - api_key: [ 'admin' ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: ids
+              type: array
+        required: true
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/users/{id}:
+    get:
+      operationId: app.get_user
+      security:
+        - api_key: [ 'admin' ]
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content: {}
+    put:
+      operationId: app.update_user
+      security:
+        - api_key: [ 'admin' ]
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: user_spec
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        200:
+          description: Success
+          content: {}
+    delete:
+      operationId: app.delete_user
+      security:
+        - api_key: [ 'admin' ]
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content: {}
+  /api/roles:
+    get:
+      operationId: app.get_roles
+      security:
+        - api_key: [ 'admin' ]
+      responses:
+        200:
+          description: Success
+          content: {}
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: X-Auth
+      in: header
+      x-apikeyInfoFunc: app.apikey_auth
+  schemas:
+    DatasetSpec:
+      required:
+      - fields_mapping
+      - file_ids
+      type: object
+      properties:
+        file_ids:
+          type: array
+        name:
+          type: string
+        fields_mapping:
+          type: array
+        model_ids:
+          type: array
+    ModelsSpec:
+      required:
+      - descriptors
+      - ds_ids
+      - label_fields
+      - methods
+      type: object
+      properties:
+        ds_ids:
+          type: array
+        label_fields:
+          type: array
+        descriptors:
+          type: array
+        methods:
+          type: array
+    ImputeSpec:
+      required:
+      - descriptors
+      - methods
+      type: object
+      properties:
+        models:
+          type: array
+        descriptors:
+          type: array
+        methods:
+          type: array
+    PredictSpec:
+      required:
+      - model_ids
+      - rs_ids
+      type: object
+      properties:
+        rs_ids:
+          type: array
+        model_ids:
+          type: array
+    SSPredictSpec:
+      required:
+      - structures
+      - models
+      type: object
+      properties:
+        structures:
+          type: array
+        models:
+          type: array
+    IdsList:
+      required:
+      - ids
+      type: object
+      properties:
+        ids:
+          type: array
+    User:
+      required:
+      - email
+      - username
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+    Role:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        privileges:
+          type: array

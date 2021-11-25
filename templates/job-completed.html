@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Job completion report</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        .collapsible {
+            background-color: #ccc;
+            color: white;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+        }
+
+        .active, .collapsible:hover {
+            background-color: #999;
+        }
+
+        .collapsible:after {
+            content: '\002B';
+            color: white;
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
+        }
+
+        .active:after {
+            content: "\2212";
+        }
+
+        .content {
+            padding: 0 18px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            background-color: #f1f1f1;
+        }
+
+        .pre {
+            font-family: monospace;
+            white-space: pre;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <p>Dear {{PERSON_NAME}}</p>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Dataset</th>
+            <th scope="col">Method</th>
+            <th scope="col">Time</th>
+            <th scope="col">F1-Score</th>
+            <th scope="col">Precision</th>
+            <th scope="col">Recall</th>
+            <th scope="col">Specificity</th>
+            <th scope="col">ACC</th>
+            <th scope="col">AUC</th>
+            <th scope="col">Cohen's Kappa</th>
+            <th scope="col">MCC</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for r in results %}
+        <tr>
+            <td>{{r.dataset}}</td>
+            <td>{{r.method}}</td>
+            <td>{{"%.2f"|format(r.execution_time)}}</td>
+
+            {% if r.error %}
+            <td colspan="8">
+                <button class="collapsible">{{r.error}}</button>
+                <div class="content">
+                    <p class="pre">{{r.stack_trace}}</p>
+                </div>
+            </td>
+            {% else %}
+            <td class="text-right">{{"%.2f"|format(r.metrics['F1-Score'])}}</td>
+            <td class="text-right">{{"%.2f"|format(r.metrics['Precision'])}}</td>
+            <td class="text-right">{{"%.2f"|format(r.metrics['Recall'])}}</td>
+            <td class="text-right">{{"%.2f"|format(r.metrics['Specificity'])}}</td>
+            <td class="text-right">{{"%.2f"|format(r.metrics['ACC'])}}</td>
+            <td class="text-right">{{"%.2f"|format(r.metrics['AUC'])}}</td>
+            <td class="text-right">{{"%.2f"|format(r.metrics["Cohen's Kappa"])}}</td>
+            <td class="text-right">{{"%.2f"|format(r.metrics['MCC'])}}</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <p>
+        CPI Machine Learner
+    </p>
+</div>
+
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

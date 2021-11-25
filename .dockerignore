@@ -1,0 +1,14 @@
+.git
+.idea
+__pycache__
+.dockerignore
+.gitignore
+
+data
+docs
+jaml_ui
+legacy
+out
+scripts
+tests
+notebooks

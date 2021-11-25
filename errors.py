@@ -1,0 +1,2 @@
+class JamlError(Exception):
+    pass

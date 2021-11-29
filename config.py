@@ -3,9 +3,9 @@ import os
 GPU_MEMORY_FRACTION = 0.5
 
 EMAIL_RECIPIENTS = [
-    ("Valery Tkachenko", "tkachenko.valery@gmail.com")
+    ("System Administrator", "admin@yourcompany.com")
 ]
-EMAIL_HOST = "192.168.1.10"
+EMAIL_HOST = "mail.host"
 EMAIL_PORT = 25
 EMAIL_FROM = "ml@sciencedataexperts.com"
 EMAIL_LOGIN = None
@@ -59,12 +59,8 @@ CONFIG = dict(
         <h3>Just Another Machine Learner (JAML)</h3>
     
         <div>
-          This app provides broad community of data scientists working in the domain of
-          computer aided drug design (CADD) with ability to easily create models and predict/screen various datasets for
-          QSAR and QSPR.     
+          This app provides an easy way to create QSAR/QSPR models.     
         </div>
     """,
     ))
-
-DESCRIPTORS_API = os.getenv('DESCRIPTORS_API', 'https://ml.sciencedataexperts.com/api/descriptors')
 
